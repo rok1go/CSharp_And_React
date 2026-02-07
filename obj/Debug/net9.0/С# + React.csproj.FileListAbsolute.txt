@@ -1,0 +1,14 @@
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\bin\Debug\net9.0\С# + React.exe
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\bin\Debug\net9.0\С# + React.deps.json
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\bin\Debug\net9.0\С# + React.runtimeconfig.json
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\bin\Debug\net9.0\С# + React.dll
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\bin\Debug\net9.0\С# + React.pdb
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.AssemblyInfoInputs.cache
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.AssemblyInfo.cs
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.csproj.CoreCompileInputs.cache
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.dll
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\refint\С# + React.dll
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.pdb
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.genruntimeconfig.cache
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\ref\С# + React.dll
