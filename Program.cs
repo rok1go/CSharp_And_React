@@ -13,11 +13,23 @@ class Program
     {
         List<User> users = new List<User>();
         int TotalId = 0;
+        User LoginedUser = null;
+        bool IsUserLogin = false;
 
         while (true)
         {   
+            bool back = false;
 
-            Console.WriteLine("0 - выйти, 1 - добавить пользователя, 2 - вывести список всех пользователей, 3 - залогинеться");
+            if (IsUserLogin)
+            {
+                Console.WriteLine($"Вы сейчас находитесь под логином {LoginedUser.username}");
+            }
+            else
+            {
+                Console.WriteLine("Вы не вошедший пользователь!");
+            }
+
+            Console.WriteLine("0 - выйти, 1 - зарегестрировать пользователя, 2 - логин, 3 - список пользователей, 4 - выйти из пользователя");
             string choice = Console.ReadLine();
             int CheckedChoice;
 
@@ -86,10 +98,10 @@ class Program
                                     if (HowLongPassword)
                                     {   
                                         u.password = NewPassword;
-                                        Console.WriteLine($"Вы успешно создали пароль {u.password}, для логина {u.username}");
+                                        Console.WriteLine($"Вы успешно создали пароль {u.password}, логин {u.username}");
                                         TotalId += 1;
                                         u.id = TotalId;
-                                        Console.WriteLine($"Айди нового пользователя {u.id}");
+                                        Console.WriteLine($"Айди пользователя {u.username} - {u.id}");
                                         users.Add(u);
                                         UserCreated = true;
                                         break;
@@ -109,7 +121,7 @@ class Program
                     }
                 }
 
-                else if (CheckedChoice == 2)
+                else if (CheckedChoice == 3)
                 {
                     foreach (User s in users)
                     {   
@@ -120,30 +132,74 @@ class Program
                         Console.WriteLine("---------------");
                     }
                 }
-                else if (CheckedChoice == 3)
-                {   
-                    while(true)
-                    {
-                        Console.WriteLine("Пожалуйста введите логин");
-                        Console.WriteLine("0 - вернуться");
-                        string login = Console.ReadLine();
 
-                        if (login == "0")
+                else if (CheckedChoice == 2)
+                {
+                    while (true)
+                    {   
+                        if (back)
                         {
                             break;
                         }
-                        int existence = 0;
-                        foreach (User s in users)
+                        if (IsUserLogin)
                         {   
-                            if(s.username == login)
-                            {
-                                existence += 1;
-                            }
+                            Console.WriteLine("Вы уже вошли в аккаунт!");
+                            break;
                         }
 
-                        if (existence == 0)
-                        {
+                        Console.WriteLine("Введите ваш логин!");
+                        Console.WriteLine("0 - вернуться");
+                        string Login = Console.ReadLine();
+                        bool LoginCheck = false;
+                        User FoundUser = null;
 
+                        if (Login == "0")
+                        {
+                            break;    
+                        }
+
+                        foreach (User u in users)
+                        {
+                            if (u.username == Login)
+                            {
+                                LoginCheck = true;
+                                FoundUser = u;;
+                            }
+                        }
+                        if (LoginCheck)
+                        {   
+                            while (true)
+                            {
+                                Console.WriteLine("Введите пароль логина!");
+                                Console.WriteLine("0 - вернуться");
+                                string LoginPassword = Console.ReadLine();
+                                bool PasswordCheck = false;
+                                
+                                if (LoginPassword == "0")
+                                {
+                                    break;
+                                }
+
+                                if (FoundUser.password == LoginPassword)
+                                {
+                                    PasswordCheck = true;
+                                }
+
+                                if (PasswordCheck)
+                                {
+                                    Console.WriteLine("Вы успешно вошли в аккаунт!");
+                                    LoginedUser = FoundUser;
+                                    IsUserLogin = true;
+                                    back = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Этот пароль не правильный");
+                                }
+
+
+                            }
                         }
                         else
                         {
@@ -152,10 +208,25 @@ class Program
                     }
                 }
 
+                else if(CheckedChoice == 4)
+                {
+                    if (IsUserLogin)
+                    {
+                        IsUserLogin = false;
+                        LoginedUser = null;
+                        Console.WriteLine("Вы успешно вышли из пользователя!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Вы и так не находитесь под каким либо пользователем!");
+                    }    
+                }
+
                 else
                 {
                     Console.WriteLine("Этой команды нету в списке!");
                 }
+
             }
             else
             {

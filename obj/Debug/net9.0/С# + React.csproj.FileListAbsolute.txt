@@ -12,3 +12,4 @@ C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\refint\С# 
 C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.pdb
 C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.genruntimeconfig.cache
 C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\ref\С# + React.dll
+C:\Users\Alexander Poznansky\Desktop\C#\С# + React\obj\Debug\net9.0\С# + React.sourcelink.json
