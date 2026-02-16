@@ -1,50 +1,115 @@
 public class Logic : ILogic
 {   
+    User LoggingUser = new User();
+    int TotalId = 0;
+    List<User> Users = new List<User>();
+//Publics
     public bool IIsItInt(string UserInput, out int CheckedUserInput)
     {
         return IsItInt(UserInput, out CheckedUserInput);
     }
-
-    public bool IIsLoginGood(string UserInput, List<User> users)
+    public User LoggingUserData()
     {
-        return IsLoginGood(UserInput, users);
+        return LoggingUser;
     }
-
-    public bool IIsPasswordGood(string UserInput)
+    public bool ILogin(string username, string password, bool NextStep)
     {
-        return IsPasswordGood(UserInput);
+        return Login(username, password, NextStep);
     }
-
-
-
+    public bool IRegister(string username, string password, bool NextStep)
+    {
+        return Register(username, password, NextStep);
+    }
+    
+//Privates
     private bool IsItInt(string UserInput, out int CheckedUserInput)
     {
         return int.TryParse(UserInput, out CheckedUserInput);
     }
-
-    private bool IsLoginGood(string UserInput, List<User> users)
-    {   
-        bool IsLoginExist = false;
-        foreach(User u in users)
+    // Login
+    private bool Login(string username, string password, bool NextStep)
+    {
+        User UserVessel = new User();
+        bool UsernameExist = false;
+        foreach (User u in Users)
         {
-            if (u.username == UserInput)
+            if (u.username == username)
             {
-                IsLoginExist = true;
+                UsernameExist = true;
+                UserVessel = u;
             }
         }
-
-        if (!IsLoginExist)
+        if (UsernameExist)
         {
-            return UserInput.Length >= 4 && UserInput.Length <= 12;
+            if (NextStep)
+            {
+                if (UserVessel.password == password)
+                {   
+                    LoggingUser = UserVessel;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
         }
         else
         {
             return false;
         }
     }
+    //Register
+    private bool Register(string username, string password, bool NextStep)
+    {   
+        User UserVessel = new User();
+        bool UsernameExist = false;
 
-    private bool IsPasswordGood(string UserInput)
-    {
-        return UserInput.Length >= 4 && UserInput.Length <= 12;
+        foreach(User u in Users)
+        {
+            if (u.username == username)
+            {
+                UsernameExist = true;
+            }
+        }
+
+        if (!UsernameExist)
+        {
+            if (username.Length >= 4 && username.Length <= 12)
+            {   
+                UserVessel.username = username;
+                if (NextStep)
+                {
+                    if (password.Length >= 4 && password.Length <= 12)
+                    {   
+                        UserVessel.password = password;
+                        TotalId += 1;
+                        UserVessel.id = TotalId;
+                        Users.Add(UserVessel);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 }

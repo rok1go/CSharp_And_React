@@ -1,8 +1,9 @@
 public interface ILogic
 {
+    
     public bool IIsItInt(string UserInput, out int CheckedUserInput);
+    public User LoggingUserData();
 
-    public bool IIsLoginGood(string UserInput, List<User> users);
-
-    public bool IIsPasswordGood(string UserInput);
+    public bool ILogin(string username, string password, bool NextStep);
+    public bool IRegister(string username, string password, bool NextStep);
 }

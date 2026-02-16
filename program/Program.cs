@@ -6,24 +6,22 @@ class Program
     static void Main(string[] args)
     {
 
-        List<User> Users = new List<User>();
         User LoginedUser = null;
-        
         ILogic logic = new Logic();
 
         bool IsLoggedIn = false;
-        bool Checking;
+        bool NextStep;
 
-        int TotalId = 0;
         int CheckedUserInputInt;
-        string CheckedUserInputString;
         string UserInput;
+        string username = null;
+        string password = null;
      
         while(true){
                 
             if (!IsLoggedIn)
             {
-
+                bool Checking = false;
                 bool back = false;
                 
                 Console.WriteLine("Добро пожаловать, в программу.");
@@ -46,53 +44,47 @@ class Program
                     {
                         while(true)
                         {   
+                            NextStep = false;
 
                             if (back)
                             {
                                 break;
                             }
 
-                            User LoggingUser = new User();
-
                             Console.WriteLine("Введите свой логин!");
                             Console.WriteLine("0 - выйти");
                             Console.WriteLine("");
 
-                            UserInput = Console.ReadLine();
+                            username = Console.ReadLine();
 
-                            if (UserInput == "0")
+                            if (username == "0")
                             {
                                 break;
                             }
 
-                            Checking = false;
-                            foreach (User u in Users)
-                            {
-                                if (u.username == UserInput)
-                                {
-                                    Checking = true;
-                                    LoggingUser = u;
-                                }
-                            }
+                            Checking = logic.ILogin(username, password, NextStep);
 
                             if (Checking)
                             {   
+                                NextStep = true;
                                 while(true)
-                                {
+                                {   
                                     Console.WriteLine("Введите свой пароль!");
                                     Console.WriteLine("0 - вернуться");
                                     Console.WriteLine("");
 
-                                    UserInput = Console.ReadLine();
+                                    password = Console.ReadLine();
 
-                                    if (UserInput == "0")
+                                    if (password == "0")
                                     {
                                         break;
                                     }
 
-                                    if (UserInput == LoggingUser.password)
-                                    {
-                                        LoginedUser = LoggingUser;
+                                    Checking = logic.ILogin(username, password, NextStep);
+
+                                    if (Checking)
+                                    {   
+                                        LoginedUser = logic.LoggingUserData();
                                         IsLoggedIn = true;
                                         back = true;
 
@@ -123,50 +115,45 @@ class Program
                     {   
                         while(true)
                         {
-
+                            NextStep = false;
                             if (back)
                             {
                                 break;
                             }
 
-                            User NewUser = new User();
                             Console.WriteLine("Чтобы зарегестрироваться введите новый логин! (от 4 до 12 символов)");
                             Console.WriteLine("0 - вернуться");
                             Console.WriteLine("");
 
-                            UserInput = Console.ReadLine();
-                            Checking = logic.IIsLoginGood(UserInput, Users);
+                            username = Console.ReadLine();
+                            Checking = logic.IRegister(username, password, NextStep);
 
-                            if (UserInput == "0")
+                            if (username == "0")
                             {
                                 break;
                             }
 
                             if (Checking)
                             {   
+                                NextStep = true;
+                                Console.WriteLine("Ваш логин прошёл по критериям!");
                                 while(true)
                                 {
-                                    NewUser.username = UserInput;
 
-                                    Console.WriteLine("Ваш логин прошёл по критериям!");
                                     Console.WriteLine("Теперь придумайте новый пароль! (от 4 до 12 символов)");
                                     Console.WriteLine("0 - вернуться");
                                     Console.WriteLine("");
 
-                                    UserInput = Console.ReadLine();
-                                    Checking = logic.IIsPasswordGood(UserInput);
+                                    password = Console.ReadLine();
+                                    Checking = logic.IRegister(username, password, NextStep);
 
-                                    if (UserInput == "0")
+                                    if (password == "0")
                                     {
                                         break;
                                     }
 
                                     else if (Checking)
                                     {
-                                        NewUser.password = UserInput;
-                                        TotalId += 1;
-                                        NewUser.id = TotalId;
-                                        Users.Add(NewUser);
                                         back = true;
 
                                         Console.WriteLine("Вы успешно создали новый аккаунт! ");
