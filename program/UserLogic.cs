@@ -1,24 +1,48 @@
+public enum LoginResult
+{
+    Success,
+    InvalidUsername,
+    InvalidPassword,
+}
+public enum RegisterResult
+{
+    Success,
+    UsernameTaken,
+    IncorrectUsername,
+    IncorrectPassword,
+}
 public class Logic : ILogic
 {   
-    User LoggingUser = new User();
+    User UserVessel = null;
     int TotalId = 0;
     List<User> Users = new List<User>();
-//Publics
+//Publics   
     public bool IIsItInt(string UserInput, out int CheckedUserInput)
     {
         return IsItInt(UserInput, out CheckedUserInput);
     }
     public User LoggingUserData()
     {
-        return LoggingUser;
+        return UserVessel;
     }
-    public bool ILogin(string username, string password, bool NextStep)
-    {
-        return Login(username, password, NextStep);
+    public LoginResult Login(string username, string password)
+    {   
+        UserVessel = null;
+        
+        if(!IsUsernameIn(username)) return LoginResult.InvalidUsername;
+        if(!PasswordCheck(password)) return LoginResult.InvalidPassword;
+
+        return LoginResult.Success;
+        
     }
-    public bool IRegister(string username, string password, bool NextStep)
+    public RegisterResult Register(string username, string password)
     {
-        return Register(username, password, NextStep);
+        if(IsUsernameTaken(username)) return RegisterResult.UsernameTaken;
+        if(!IsUsernameValid(username)) return RegisterResult.IncorrectUsername;
+        if(!IsPasswordValid(password)) return RegisterResult.IncorrectPassword;
+
+        CreateUser(username, password);
+        return RegisterResult.Success;
     }
     
 //Privates
@@ -27,89 +51,64 @@ public class Logic : ILogic
         return int.TryParse(UserInput, out CheckedUserInput);
     }
     // Login
-    private bool Login(string username, string password, bool NextStep)
-    {
-        User UserVessel = new User();
-        bool UsernameExist = false;
-        foreach (User u in Users)
-        {
+    private bool IsUsernameIn(string username)
+    {   
+        foreach(User u in Users)
+        {   
             if (u.username == username)
-            {
-                UsernameExist = true;
+            {   
                 UserVessel = u;
+                return true;
             }
         }
-        if (UsernameExist)
+        return false;
+    }
+
+    private bool PasswordCheck(string password)
+    {   
+        if(UserVessel == null) return false;
+        if (string.IsNullOrWhiteSpace(password)) return false;
+
+        return UserVessel.password == password;
+    }
+
+    //Register
+    private bool IsUsernameTaken(string username)
+    {   
+        foreach(User u in Users)
         {
-            if (NextStep)
-            {
-                if (UserVessel.password == password)
-                {   
-                    LoggingUser = UserVessel;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
+            if(u.username == username)
             {
                 return true;
             }
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
-    //Register
-    private bool Register(string username, string password, bool NextStep)
+
+    private bool IsUsernameValid(string username)
+    {
+        if (string.IsNullOrWhiteSpace(username)) return false;
+        if(username.Length >= 4 && username.Length <= 12) return true;
+
+        return false;
+    }
+
+    private bool IsPasswordValid(string password)
     {   
-        User UserVessel = new User();
-        bool UsernameExist = false;
+        if (string.IsNullOrWhiteSpace(password)) return false;
+        if (password.Length >= 4 && password.Length <= 12) return true;
 
-        foreach(User u in Users)
-        {
-            if (u.username == username)
-            {
-                UsernameExist = true;
-            }
-        }
-
-        if (!UsernameExist)
-        {
-            if (username.Length >= 4 && username.Length <= 12)
-            {   
-                UserVessel.username = username;
-                if (NextStep)
-                {
-                    if (password.Length >= 4 && password.Length <= 12)
-                    {   
-                        UserVessel.password = password;
-                        TotalId += 1;
-                        UserVessel.id = TotalId;
-                        Users.Add(UserVessel);
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
+
+    private void CreateUser(string username, string password)
+    {
+        Users.Add(new User
+        {
+            id = ++TotalId,
+            username = username,
+            password = password,
+        });
+    }
+
 }
