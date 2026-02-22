@@ -66,13 +66,13 @@ class Program
 
                                 if (result == LoginResult.InvalidUsername)
                                 {
-                                    Console.WriteLine("Не верный логин!");
+                                    Console.WriteLine("Неверный логин!");
                                     Console.WriteLine("");
                                     break;
                                 }
                                 if (result == LoginResult.InvalidPassword)
                                 {
-                                    Console.WriteLine("Неверный пароль!");
+                                    Console.WriteLine($"Неверный пароль для пользователя {username}!");
                                     Console.WriteLine("");
                                     continue;
                                 }
@@ -132,7 +132,7 @@ class Program
                                 }
                                 if(result == RegisterResult.IncorrectPassword)
                                 {
-                                    Console.WriteLine("Этот пароль не подходит критериям!");
+                                    Console.WriteLine($"Этот пароль для {username} не подходит критериям!");
                                     Console.WriteLine("");
                                     continue;
                                 }
